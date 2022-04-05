@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlayerAnim : MonoBehaviour
 {
-    private Animator anim;
+    private Animator _anim;
     Vector2 movement;
     private void Start()
     {
-        anim = GetComponent<Animator>();
+        _anim = GetComponent<Animator>();
     }
     void Update()
     {
@@ -21,11 +21,11 @@ public class PlayerAnim : MonoBehaviour
         Vector2 dsd = new Vector2(0,0);
         if(movement != dsd)
         {
-            anim.SetBool("isRunning",true);
+            _anim.SetBool("isRunning",true);
         }
         else
         {
-            anim.SetBool("isRunning", false);
+            _anim.SetBool("isRunning", false);
         }
     }
 }
