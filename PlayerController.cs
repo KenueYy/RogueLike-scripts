@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private bool isFacingRight = true;
+    private PlayerBuffs _playerBuffs;
 
     Vector2 movement;
 
@@ -35,5 +36,9 @@ public class PlayerController : MonoBehaviour
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+    public void BuffSpeed(float value)
+    {
+        speed += value;
     }
 }

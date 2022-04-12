@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyMovementController : MonoBehaviour
 {
+    public Transform start;
+    public float viewDistance;
     [SerializeField]
     private Transform _player;
     private NavMeshAgent agent;
@@ -14,6 +16,7 @@ public class EnemyMovementController : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -21,9 +24,9 @@ public class EnemyMovementController : MonoBehaviour
     {
         var distance = Mathf.Sqrt(Mathf.Pow(_player.position.x - agent.transform.position.x, 2) + Mathf.Pow(_player.position.y - agent.transform.position.y, 2));
         //Debug.Log(distance<10);
-        if (distance < 10)
+        if (distance < viewDistance)
             agent.SetDestination(_player.position);
         else
-            agent.transform.position = transform.position;
+            agent.SetDestination(start.position);
     }
 }

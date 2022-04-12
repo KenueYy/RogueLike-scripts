@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-interface IOpening
+public class Slime : Enemy
 {
-    void Open();
-    void Close();
+    
 }

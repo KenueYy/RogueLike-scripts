@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionEvents : MonoBehaviour
+interface IOpenable
 {
-    
+    void Open();
+    void Close();
 }
