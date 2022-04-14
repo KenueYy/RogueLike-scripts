@@ -15,7 +15,11 @@ public class PlayerActions : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(ActionButton) && chestNearby)
+        
+    }
+    public void Action()
+    {
+        if (chestNearby)
             ActionObject.GetComponent<IOpenable>().Open();
     }
     private void OnTriggerEnter2D(Collider2D collision)

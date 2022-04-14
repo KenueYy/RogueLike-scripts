@@ -14,22 +14,19 @@ public class PlayerFightSystem : MonoBehaviour
     public float attackRange;
     private Animator _anim;
     private float _attackTime;
+    public bool isReadyAttack;
     private void Start()
     {
-        playerUI.healthBar.SetMaxHealth(maxHealth);
-        playerUI.healthBar.SetHealth(health);
+        playerUI.healthBar.SetMaxValue(maxHealth);
+        playerUI.healthBar.SetValue(health);
         _anim = GetComponent<Animator>();
     }
     public void Update()
     {
-        if (_attackTime <= 0)
+        if (_attackTime <= 0 && !isReadyAttack)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Attack();
-                _attackTime = startAttackTime;
-            }
-            
+            isReadyAttack = true;
+            _attackTime = startAttackTime;
         }
         else
         {
@@ -43,15 +40,18 @@ public class PlayerFightSystem : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        playerUI.healthBar.SetHealth(health);
+        playerUI.healthBar.SetValue(health);
     }
     public void Attack()
     {
-        _anim.SetTrigger("Attack");
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, EnemyLayer);
-        foreach (Collider2D enemy in hitEnemies)
-        {
-            enemy.GetComponent<Enemy>().TakeDamage(damage/hitEnemies.Length);
+        if (isReadyAttack) {
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, EnemyLayer);
+            foreach (Collider2D enemy in hitEnemies)
+            {
+                enemy.GetComponent<Enemy>().TakeDamage(damage / hitEnemies.Length);
+            }
+            isReadyAttack = false;
+            _anim.SetTrigger("Attack");
         }
     }
     private void OnDrawGizmosSelected()
@@ -70,8 +70,8 @@ public class PlayerFightSystem : MonoBehaviour
     {
         maxHealth += value;
         health += value;
-        playerUI.healthBar.SetMaxHealth(maxHealth);
-        playerUI.healthBar.SetHealth(health);
+        playerUI.healthBar.SetMaxValue(maxHealth);
+        playerUI.healthBar.SetValue(health);
     }
 }
     

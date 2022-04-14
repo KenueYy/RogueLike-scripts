@@ -9,15 +9,15 @@ public abstract class Enemy : MonoBehaviour
     public float health;
     public float minDamage, maxDamage;
     public float startAttackTime;
-    public OnHit HitEvents;
     public HealthBar healthBar;
 
     private float _attackTime;
     private bool _isReadyAttack;
-    private void Start()
+    private void Awake()
     {
-        healthBar.SetMaxHealth(maxHealth);
-        healthBar.SetHealth(health);
+        healthBar.SetMaxValue(maxHealth);
+        healthBar.SetValue(health);
+        healthBar.UpdateTextValue();
     }
     public void Update()
     {
@@ -28,7 +28,8 @@ public abstract class Enemy : MonoBehaviour
         health -= damage;
         if (health <= 0)
             Die();
-        healthBar.SetHealth(health);
+        healthBar.SetValue(health);
+        healthBar.UpdateTextValue();
     }
     private void Die()
     {
@@ -60,5 +61,3 @@ public abstract class Enemy : MonoBehaviour
         _attackTime = startAttackTime; 
     }
 }
-[System.Serializable]
-public class OnHit : UnityEvent<float> { };

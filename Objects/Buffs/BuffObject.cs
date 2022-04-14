@@ -6,6 +6,7 @@ using UnityEngine;
 public class BuffObject : ScriptableObject
 {
     public Sprite sprite;
+    public Buff buff;
     public int speedLvL;
     public int damageLvL;
     public int attackSpeedLvl;

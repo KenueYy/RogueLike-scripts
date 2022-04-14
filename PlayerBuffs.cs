@@ -19,12 +19,6 @@ public class PlayerBuffs : MonoBehaviour
     public int lvlVamipric;
     public int lvlMaxHealth;
     public int lvlBladeHelmet;
-    [Header("Итог бафа")]
-    public float speed;
-    public float damage;
-    public float attakSpeed;
-    public float vampiric;
-    public float maxHealth;
 
     public PlayerUI playerUI;
     private PlayerController _playerController;
@@ -37,6 +31,7 @@ public class PlayerBuffs : MonoBehaviour
     }
     public void SpeedUp(int countUPs)
     {
+        float speed = 0;
         lvlSpeed += countUPs;
         speed += speedPerLvl * countUPs;
         _playerController.BuffSpeed(speed);
@@ -44,6 +39,7 @@ public class PlayerBuffs : MonoBehaviour
     }
     public void DamageUp(int countUPs)
     {
+        float damage = 0;
         lvlDamage += countUPs;
         damage += damagePerLvl * countUPs;
         _playerFightSystem.BuffDamage(damage);
@@ -51,6 +47,7 @@ public class PlayerBuffs : MonoBehaviour
     }
     public void AttackSpeedUp(int countUPs)
     {
+        float attakSpeed = 0;
         lvlAttackSpeed += countUPs;
         attakSpeed += attackSpeedPerLvl * countUPs;
         _playerFightSystem.BuffAttackSpeed(attakSpeed);
@@ -58,6 +55,7 @@ public class PlayerBuffs : MonoBehaviour
     }
     public void VampiricUp(int countUPs)
     {
+        float vampiric = 0;
         lvlVamipric += countUPs;
         vampiric += vampiricPerLvl * countUPs;
     }
@@ -68,6 +66,7 @@ public class PlayerBuffs : MonoBehaviour
     }
     public void MaxHealthUp(int countUPs)
     {
+        float maxHealth = 0;
         lvlMaxHealth += countUPs;
         maxHealth += maxHealthPerLvl * countUPs;
         _playerFightSystem.BuffMaxHealth(maxHealth);

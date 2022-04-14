@@ -7,30 +7,43 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public Camera cam;
 
-    private Rigidbody2D rb;
-    private SpriteRenderer sr;
+    private Rigidbody2D _rb;
     private bool isFacingRight = true;
-    private PlayerBuffs _playerBuffs;
-
+    private PlayerInput _input;
+    private PlayerAnim _anim;
     Vector2 movement;
-
-    void Start()
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
+        _input = new PlayerInput();
+        _rb = GetComponent<Rigidbody2D>();
+        _anim = GetComponent<PlayerAnim>();
+        _input.Player.Action.performed += context => gameObject.GetComponent<PlayerActions>().Action();
+        _input.Player.Attack.performed += context => gameObject.GetComponent<PlayerFightSystem>().Attack();
+    }
+    private void OnEnable()
+    {
+        _input.Enable();
+    }
+    private void OnDisable()
+    {
+        _input.Disable();
     }
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        movement = _input.Player.Move.ReadValue<Vector2>();
+        _anim.PlayRunningAnim(_input.Player.Move.ReadValue<Vector2>());
     }
 
     void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
+        Move();
+    }
+    public void Move()
+    {
+        _rb.MovePosition(_rb.position + movement * speed * Time.fixedDeltaTime);
         if (movement.x > 0 && !isFacingRight) Flip(); else if (movement.x < 0 && isFacingRight) Flip();
     }
-    void Flip()
+    public void Flip()
     {
         isFacingRight = !isFacingRight;
         Vector3 theScale = transform.localScale;

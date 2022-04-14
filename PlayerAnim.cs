@@ -5,21 +5,14 @@ using UnityEngine;
 public class PlayerAnim : MonoBehaviour
 {
     private Animator _anim;
-    Vector2 movement;
     private void Start()
     {
         _anim = GetComponent<Animator>();
     }
-    void Update()
+    public void PlayRunningAnim(Vector2 movement)
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-        PlayRunningAnim(movement);
-    }
-    private void PlayRunningAnim(Vector2 movement)
-    {
-        Vector2 dsd = new Vector2(0,0);
-        if(movement != dsd)
+        Vector2 stay = new Vector2(0,0);
+        if(movement != stay)
         {
             _anim.SetBool("isRunning",true);
         }
